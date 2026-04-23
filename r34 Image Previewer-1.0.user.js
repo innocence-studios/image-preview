@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         r34 Image Previewer
 // @namespace    ImgPreview
-// @version      1.0
+// @version      1.1
 // @description  Lets you preview images in full resolution when hovering the thumbnail
 // @author       haruusyren
 // @source       https://github.com/innocence-studios/image-preview
