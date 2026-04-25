@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         r34 Image Previewer
 // @namespace    ImgPreview
-// @version      1.1
+// @version      1.2.1
 // @description  Lets you preview images in full resolution when hovering the thumbnail
 // @author       haruusyren
 // @source       https://github.com/innocence-studios/image-preview
@@ -17,7 +17,9 @@
     document.querySelector('#post-list > span')?.remove(); // Removes the right container if it exists
     let con = document.createElement('div'); // Creates the preview container
     con.id = 'previewParent';
-    (window.location.href.includes('page=favorites') ? document.body.appendChild(con) : document.querySelector('#post-list').appendChild(con));
+    if (window.location.href.includes('page=favorites')) document.body.appendChild(con);
+    if (window.location.href.includes('page=post&s=list')) document.querySelector('#post-list').appendChild(con);
+    if (window.location.href.includes('page=pool')) document.querySelector('#content').appendChild(con);
 
     let extensions = [ 'png', 'jpg', 'jpeg', 'gif' ]; // Supported extensions
     let targets = [];
@@ -91,8 +93,12 @@
     if (window.location.href.includes('page=favorites')){ // CSS on favorite page
         style.sheet.insertRule('#previewParent { position: fixed; min-height: 84dvh; right: 0; width: 39dvw; top: 50%; transform: translateY(-50%); }', style.sheet.cssRules.length);
         style.sheet.insertRule('.prev { position: fixed; max-height: 100dvh; object-fit: cover; width: stretch; top: 50%; transform: translateY(-50%); }', style.sheet.cssRules.length);
-    }
-    else { // CSS on search page
+    } else
+    if (window.location.href.includes('page=pool')){ // CSS on pool page
+        style.sheet.insertRule('#previewParent { position: fixed; min-height: 79dvh; right: 0; width: 39dvw; top: 50%; transform: translateY(-50%); }', style.sheet.cssRules.length);
+        style.sheet.insertRule('.prev { position: fixed; max-height: 100dvh; object-fit: cover; width: stretch; top: 50%; transform: translateY(-50%); }', style.sheet.cssRules.length);
+    } else
+    if (window.location.href.includes('page=post&s=list')) { // CSS on search page
         style.sheet.insertRule('#previewParent { width: stretch; }', style.sheet.cssRules.length);
         style.sheet.insertRule('.prev { position: fixed; max-height: 100dvh; object-fit: cover; width: stretch; top: 50%; transform: translateY(-50%); }', style.sheet.cssRules.length);
         style.sheet.insertRule('.loader { animation: l1 1s infinite; aspect-ratio: 1; border-radius: 50%; border: 8px solid; border-color: #000 #0000; width: 50px; margin: auto; }', style.sheet.cssRules.length);
